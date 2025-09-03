@@ -1,15 +1,14 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Pressable, StyleSheet, View, ViewStyle } from 'react-native';
 import {
-    PanGestureHandler,
-    PanGestureHandlerGestureEvent,
+    Gesture,
+    GestureDetector,
 } from 'react-native-gesture-handler';
 import Animated, {
     Easing,
     Extrapolate,
     interpolate,
     runOnJS,
-    useAnimatedGestureHandler,
     useAnimatedStyle,
     useDerivedValue,
     useSharedValue,
@@ -138,27 +137,22 @@ const BookPagePortrait = React.forwardRef<PortraitBookInstance, IBookPageProps>(
             };
         });
 
-        const onPanGestureHandler = useAnimatedGestureHandler<
-            PanGestureHandlerGestureEvent,
-            { x: number }
-        >({
-            // @ts-ignore
-            onStart: (event, ctx) => {
-                ctx.x = x.value;
+        const panGesture = Gesture.Pan()
+            .onStart(() => {
                 if (onPageDragStart && typeof onPageDragStart === 'function') {
                     runOnJS(onPageDragStart)();
                 }
-            },
-            onActive: (event, ctx) => {
-                const newX = ctx.x + event.translationX;
+            })
+            .onUpdate((event) => {
+                const newX = event.translationX;
                 const degrees = getDegreesForX(newX);
                 x.value = newX;
                 rotateYAsDeg.value = degrees;
                 if (onPageDrag && typeof onPageDrag === 'function') {
                     runOnJS(onPageDrag)();
                 }
-            },
-            onEnd: (event) => {
+            })
+            .onEnd((event) => {
                 if (onPageDragEnd && typeof onPageDragEnd === 'function') {
                     runOnJS(onPageDragEnd)();
                 }
@@ -204,8 +198,7 @@ const BookPagePortrait = React.forwardRef<PortraitBookInstance, IBookPageProps>(
                         }
                     );
                 }
-            },
-        });
+            });
 
         const gesturesEnabled = enabled && !isAnimating;
 
@@ -219,10 +212,7 @@ const BookPagePortrait = React.forwardRef<PortraitBookInstance, IBookPageProps>(
 
         return (
             <Animated.View style={containerStyle}>
-                <PanGestureHandler
-                    onGestureEvent={onPanGestureHandler}
-                    enabled={gesturesEnabled}
-                >
+                <GestureDetector gesture={panGesture}>
                     <Animated.View style={containerStyle}>
                         {isPressable && prev && (
                             <Pressable
@@ -277,7 +267,7 @@ const BookPagePortrait = React.forwardRef<PortraitBookInstance, IBookPageProps>(
                             <IPage page={prev} right={false} {...iPageProps} />
                         )}
                     </Animated.View>
-                </PanGestureHandler>
+                </GestureDetector>
             </Animated.View>
         );
     }
