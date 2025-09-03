@@ -57,7 +57,7 @@ type RNTransform = Exclude<TransformsStyle['transform'], undefined>;
 export const transformOrigin = (
     { x, y }: { x: number; y: number },
     transformations: RNTransform
-): RNTransform => {
+): any => {
     'worklet';
     return [
         { translateX: x },

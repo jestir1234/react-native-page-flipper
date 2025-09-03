@@ -138,6 +138,7 @@ const BookPagePortrait = React.forwardRef<PortraitBookInstance, IBookPageProps>(
         });
 
         const panGesture = Gesture.Pan()
+            .enabled(enabled && !isAnimating)
             .onStart(() => {
                 if (onPageDragStart && typeof onPageDragStart === 'function') {
                     runOnJS(onPageDragStart)();
@@ -200,7 +201,7 @@ const BookPagePortrait = React.forwardRef<PortraitBookInstance, IBookPageProps>(
                 }
             });
 
-        const gesturesEnabled = enabled && !isAnimating;
+
 
         const iPageProps = {
             containerSize,

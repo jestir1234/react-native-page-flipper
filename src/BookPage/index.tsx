@@ -83,7 +83,7 @@ const BookPage = React.forwardRef<BookPageInstance, IBookPageProps>(
         const leftPSnapPoints = [0, containerWidth];
         const rightPSnapPoints = [-containerWidth, 0];
         const pSnapPoints = right ? rightPSnapPoints : leftPSnapPoints;
-        const gesturesEnabled = enabled && !isAnimating;
+
         const showSpine = true;
 
         // might not need this useEffect
@@ -222,6 +222,7 @@ const BookPage = React.forwardRef<BookPageInstance, IBookPageProps>(
         });
 
         const panGesture = Gesture.Pan()
+            .enabled(enabled && !isAnimating)
             .onStart(() => {
                 if (onPageDragStart && typeof onPageDragStart === 'function') {
                     runOnJS(onPageDragStart)();
