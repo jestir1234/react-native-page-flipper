@@ -59,6 +59,7 @@ const FrontShadow: React.FC<FrontShadowProps> = ({
 
     return (
         <Animated.View
+            pointerEvents="none"
             style={[
                 {
                     zIndex: 5000,

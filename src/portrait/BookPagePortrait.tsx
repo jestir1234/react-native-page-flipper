@@ -370,8 +370,9 @@ const IPage: React.FC<IPageProps> = ({
         <View
             style={{
                 ...StyleSheet.absoluteFillObject,
-                zIndex: !right ? 5 : 0,
+                zIndex: -1,
             }}
+            pointerEvents="box-none"
         >
             {/* BACK */}
             <Animated.View

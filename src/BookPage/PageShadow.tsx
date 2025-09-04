@@ -46,6 +46,7 @@ const PageShadow: React.FC<PageShadowProps> = ({
 
     return (
         <Animated.View
+            pointerEvents="none"
             style={[
                 {
                     zIndex: 2,

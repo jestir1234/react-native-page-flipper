@@ -81,7 +81,7 @@ const BookSpine2: React.FC<IBookSpine2Props> = ({
                     position: 'absolute',
                     height: '100%',
                     width: '100%',
-                    zIndex: 10000000,
+                    zIndex: 1000,
                     flexDirection: 'row',
                 },
                 style,

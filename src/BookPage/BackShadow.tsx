@@ -40,6 +40,7 @@ const BackShadow: React.FC<BackShadowProps> = ({ degrees, right }) => {
 
     return (
         <Animated.View
+            pointerEvents="none"
             style={[
                 {
                     ...StyleSheet.absoluteFillObject,
